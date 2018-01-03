@@ -111,7 +111,7 @@ func main() {
 			repo2 = strings.Replace(repo2, "-", "_", -1)
 		}
 
-		fmt.Printf("%s:%s:%s:%s/src/%s,\n", account, repo, revision, repo2, name)
+		fmt.Printf("%s:%s:%s:%s/src/%s \\\n", account, repo, revision, repo2, name)
 
 
 	}
