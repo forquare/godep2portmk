@@ -70,13 +70,12 @@ func main() {
 //	fmt.Println(projects)
 	for _, p := range projects.Project {
 		name := strings.ToLower(p.Name)
-		revision := ""
+		revision := "XXXXXXX"
 		
 		if len([]rune(p.Revision)) == 40 {
 			revision = strings.Join(strings.Split(p.Revision, "")[0:7], "")
 		} else {
 			fmt.Println("-- MANUALLY DO", name, "--")
-			continue
 		}
 
 		splitted := strings.Split(name, "/")
