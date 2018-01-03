@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"flag"
 	"bytes"
+	"strings"
 	"io"
 	"os"
 	"github.com/pelletier/go-toml"
@@ -66,10 +67,55 @@ func main() {
 		panic(err)
 	}
 	
-	fmt.Println(projects)
-//	for p := range projects.Project {
-//		fmt.Println(p.Name)
-//	}
+//	fmt.Println(projects)
+	for _, p := range projects.Project {
+		name := strings.ToLower(p.Name)
+		revision := ""
+		
+		if len([]rune(p.Revision)) == 40 {
+			revision = strings.Join(strings.Split(p.Revision, "")[0:7], "")
+		} else {
+			fmt.Println("-- MANUALLY DO", name, "--")
+			continue
+		}
+
+		splitted := strings.Split(name, "/")
+
+		site := splitted[0]
+		account := splitted[1]
+		repo := ""
+
+		if strings.Contains(site, "golang.org") {
+			account = "golang"
+		}
+
+		if strings.Contains(site, "gopkg.in") {
+			if strings.Contains(account, "yaml.v2"){
+				account = "go-yaml"
+				repo = "yaml"
+			} else {
+				fmt.Println("-- MANUALLY DO", name, "--")
+			}
+		}
+
+		if repo == "" {
+			repo = splitted[2]
+		}
+
+		if repo == "jwalterweatherman" {
+			repo = "jWalterWeatherman"
+		}
+
+		repo2 := repo
+
+		if strings.Contains(repo2, "-") {
+			repo2 = strings.Replace(repo2, "-", "_", -1)
+		}
+
+		fmt.Printf("%s:%s:%s:%s:src:%s\n", account, repo, revision, repo2, name)
+
+
+	}
 }
 
 func readData(d io.Reader) ([]byte) {
