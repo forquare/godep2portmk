@@ -69,7 +69,7 @@ func main() {
 	
 //	fmt.Println(projects)
 	for _, p := range projects.Project {
-		name := strings.ToLower(p.Name)
+		name := p.Name
 		revision := "XXXXXXX"
 		
 		if len([]rune(p.Revision)) == 40 {
@@ -101,8 +101,8 @@ func main() {
 			repo = splitted[2]
 		}
 
-		if repo == "jwalterweatherman" {
-			repo = "jWalterWeatherman"
+		if repo == "jWalterWeatherman" {
+			name = strings.ToLower(name)
 		}
 
 		repo2 := repo
