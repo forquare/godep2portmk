@@ -101,8 +101,8 @@ func main() {
 			repo = splitted[2]
 		}
 
-		if repo == "jWalterWeatherman" {
-			name = strings.ToLower(name)
+		if repo == "jwalterweatherman" {
+			repo = "jWalterWeatherman"
 		}
 
 		repo2 := repo
@@ -111,8 +111,11 @@ func main() {
 			repo2 = strings.Replace(repo2, "-", "_", -1)
 		}
 
-		fmt.Printf("%s:%s:%s:%s/src/%s \\\n", account, repo, revision, repo2, name)
-
+		if projects.Project[len(projects.Project)-1].Name == name {
+			fmt.Printf("%s:%s:%s:%s/src/%s\n", account, repo, revision, repo2, name)
+		} else {
+			fmt.Printf("%s:%s:%s:%s/src/%s \\\n", account, repo, revision, repo2, name)
+		}	
 
 	}
 }
